@@ -50,3 +50,25 @@ void list_sort(list_node *start)
         }
     }
 }
+
+
+// Сортировка произвольного списка
+void list_sort_cmp(list_node *start, compare cmp)
+{
+    list_node* cur = start;
+    while (cur->next) {
+        list_node *next = cur->next;
+        list_node *prev = cur->prev;
+
+        if (cmp(cur, next) > 0) {
+            if (prev) {
+                prev->next = next;
+            }
+            cur->next = next->next;
+            next->next = cur;
+            cur = prev;
+        } else {
+            cur = cur->next;
+        }
+    }
+}

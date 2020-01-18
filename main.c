@@ -4,8 +4,15 @@
 #define DEBUG
 #include "debug.h"
 #include "list/list.h"
+#include "list/node.h"
 
 #define SIZE_INT sizeof(int)
+
+int compare_int(list_node* n1, list_node* n2) {
+    int* v1 = n1->content;
+    int* v2 = n2->content;
+    return *v1-*v2;
+}
 
 int main() {
     srand(0);
@@ -42,7 +49,7 @@ int main() {
     PRINT_SEP(50);
     PRINT_INT(list_size(&start));
 
-    list_sort(&start);
+    list_sort_cmp(&start, &compare_int);
 
     PRINT_SEP(50);
     for (list_node *i = &start; i != NULL; i = i->next)
