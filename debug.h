@@ -11,6 +11,11 @@
 #define PRINT_FLT(x) printf("%s: %8.3lf\n", #x, x)
 // Печать строки
 #define PRINT_STR(x) printf("%s: \"%s\"\n", #x, x)
+// Печать разделяющей строки
+#define PRINT_SEP(x) \
+    for (int i = 0; i < x; i++) printf("-");\
+    printf("\n")
+#define PRINT_SEP_DEFAULT PRINT_SEP(10)
 
 #endif
 
