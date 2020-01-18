@@ -1,9 +1,11 @@
 #include "list.h"
+#include <stdlib.h>
 
 // Присоединение одного узла (n2) к другому (n1)
 void node_add(list_node *n1, list_node *n2)
 {
     n1->next = n2;
+    n2->prev = n1;
 }
 
 
@@ -25,4 +27,26 @@ int list_size(list_node* start)
         size++;
 
     return size;
+}
+
+
+// Сортировка списка (int)
+void list_sort(list_node *start)
+{
+    list_node* cur = start;
+    while (cur->next) {
+        list_node *next = cur->next;
+        list_node *prev = cur->prev;
+
+        if (*(int*)next->content < *(int*)cur->content) {
+            if (prev) {
+                prev->next = next;
+            }
+            cur->next = next->next;
+            next->next = cur;
+            cur = prev;
+        } else {
+            cur = cur->next;
+        }
+    }
 }

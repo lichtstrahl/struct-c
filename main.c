@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #define DEBUG
 #include "debug.h"
 #include "list/list.h"
@@ -7,7 +8,7 @@
 #define SIZE_INT sizeof(int)
 
 int main() {
-    int a = 0;
+    srand(0);
 
     list_node n1 = {.content = "text1", .next = NULL};
     list_node n2 = {.content = "text2", .next = NULL};
@@ -19,11 +20,6 @@ int main() {
     *start_value = 0;
     list_node start = {.content = start_value, .next = NULL};
 
-    int* tmp_value = (int*)malloc(SIZE_INT);
-    *tmp_value = 1;
-    list_node tmp = {.content = tmp_value, .next = NULL};
-    node_add(&start, &tmp);
-
     PRINT_SEP_DEFAULT;
     for (list_node *i = &start; i != NULL; i = i->next)
         PRINT_INT(*(int*)i->content);
@@ -33,7 +29,7 @@ int main() {
 
     for (int i = 0; i < 5; i++) {
         int* tmp_value_2 = (int*)malloc(SIZE_INT);
-        *tmp_value_2 = (i+1)*10;
+        *tmp_value_2 = rand()%100;
         list_node* tmp_2 = (list_node*)malloc(sizeof(list_node));
         tmp_2->content = tmp_value_2;
         list_add(&start, tmp_2);
@@ -46,5 +42,13 @@ int main() {
     PRINT_SEP(50);
     PRINT_INT(list_size(&start));
 
-    return a;
+    list_sort(&start);
+
+    PRINT_SEP(50);
+    for (list_node *i = &start; i != NULL; i = i->next)
+        PRINT_INT(*(int*)i->content);
+    PRINT_SEP(50);
+    PRINT_INT(list_size(&start));
+
+    return 0;
 }
